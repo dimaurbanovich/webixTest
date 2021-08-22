@@ -5,46 +5,52 @@
 }
 
 body {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .container {
-  width: 500px;
-}
-
-.field {
-  border: solid 1px black;
-  display: flex;
-  flex-wrap: wrap;
-  padding: 4px 0;
-  min-height: 40px;
-}
-
-.tagInput {
-  border: none;
-  margin-left: 8px;
-  outline: none;
-  line-height: 20px;
-}
-
-/* .container > div {
-  display: flex;
-  justify-content: space-between;
+  width: 600px;
   padding: 20px;
+  border-radius: 3px;
+  background-color: cadetblue;
+}
+
+.container > input {
+  width: 100%;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.container > p {
+  background-color: #fff;
+  padding: 4px;
 }
 
 .methods {
   display: flex;
-  flex-direction: column;
+  margin-bottom: 10px;
   justify-content: space-between;
-  height: 100px;
-  margin-left: 20px;
 }
 
-*/
+.methods > span {
+  background-color: rgb(239, 239, 239);
+  border: 2px;
+  border-color: rgb(118, 118, 118);
+  padding: 2px;
+  cursor: default;
+}
+
+.methods > button {
+  font-size: 16px;
+}
 
 .list {
-  list-style: none;
+  background-color: #fff;
+  width: 100%;
+  padding: 4px 0;
+  border-radius: 3px;
+  min-height: 40px;
+  margin-bottom: 10px;
 }
 
 .list li {
@@ -56,12 +62,14 @@ body {
   margin-left: 8px;
   cursor: pointer;
   margin-bottom: 6px;
+  list-style: none;
 }
 
 .destroy {
   background: none;
   border: none;
   cursor: pointer;
+  font-size: 18px;
 }
 
 .destroy:hover {

@@ -7,7 +7,6 @@ const replaceTagsBtn = document.getElementById('replaceTagsBtn');
 const removeTagBtn = document.getElementById('removeTagBtn');
 
 const tagStorageKey = 'tags';
-const readonlyStorageKey = 'readonly';
 
 const tags = {
   value: [],
@@ -25,6 +24,8 @@ const tags = {
     input.toggleAttribute('disabled');
     btn.toggleAttribute('disabled');
     replaceTagsBtn.toggleAttribute('disabled');
+    allTagsBtn.toggleAttribute('disabled');
+    removeTagBtn.toggleAttribute('disabled');
     const destroyButtons = document.getElementsByClassName('destroy');
     for (let i = 0; i < destroyButtons.length; i++) {
       destroyButtons[i].toggleAttribute('disabled');
@@ -36,9 +37,13 @@ const tags = {
       allTags.push(tag.name);
     });
     const pTag = document.createElement('p');
-    pTag.innerHTML = ``;
-    pTag.innerHTML = `<p>${allTags.join(', ')}</p>`;
-    list.after(pTag);
+    const addedPTag = document.getElementById('allTags');
+    if (addedPTag !== null) {
+      addedPTag.innerHTML = `<p id='allTags'>${allTags.join(', ')}</p>`;
+    } else {
+      pTag.innerHTML = `<p id='allTags'>${allTags.join(', ')}</p>`;
+      list.after(pTag);
+    }
   },
   replaceTags(stringNewTags) {
     const arrNewTags = stringNewTags.split(' ');
