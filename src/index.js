@@ -20,24 +20,32 @@ const tags = {
     localStorage.setItem(tagStorageKey, JSON.stringify(this.value));
     renderList();
   },
-  readonlyMode() {
-    input.toggleAttribute('disabled');
-    btn.toggleAttribute('disabled');
-    replaceTagsBtn.toggleAttribute('disabled');
-    allTagsBtn.toggleAttribute('disabled');
-    removeTagBtn.toggleAttribute('disabled');
-    const destroyButtons = document.getElementsByClassName('destroy');
-    for (let i = 0; i < destroyButtons.length; i++) {
-      destroyButtons[i].toggleAttribute('disabled');
+  readonlyMode(boolian) {
+    if (boolian) {
+      input.toggleAttribute('disabled');
+      btn.toggleAttribute('disabled');
+      replaceTagsBtn.toggleAttribute('disabled');
+      allTagsBtn.toggleAttribute('disabled');
+      removeTagBtn.toggleAttribute('disabled');
+      const destroyButtons = document.getElementsByClassName('destroy');
+
+      for (let i = 0; i < destroyButtons.length; i++) {
+        destroyButtons[i].toggleAttribute('disabled');
+      }
+
+      readonlyBox.toggleAttribute('checked');
     }
   },
   getTags() {
     const allTags = [];
+
     tags.value.map((tag) => {
       allTags.push(tag.name);
     });
+
     const pTag = document.createElement('p');
     const addedPTag = document.getElementById('allTags');
+
     if (addedPTag !== null) {
       addedPTag.innerHTML = `<p id='allTags'>${allTags.join(', ')}</p>`;
     } else {
@@ -118,11 +126,12 @@ list.addEventListener('click', function (e) {
   }
 });
 
-readonlyBox.addEventListener('click', tags.readonlyMode);
+readonlyBox.addEventListener('change', tags.readonlyMode);
 
 removeTagBtn.addEventListener('click', tags.removeLastTag);
 
 allTagsBtn.addEventListener('click', tags.getTags);
+
 replaceTagsBtn.addEventListener('click', function () {
   const tagValue = input.value;
   tags.replaceTags(tagValue);
