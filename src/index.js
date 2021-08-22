@@ -2,19 +2,28 @@ const list = document.getElementById('list');
 const input = document.getElementById('input');
 const btn = document.getElementById('btn');
 const readonlyBox = document.getElementById('readonly');
+const allTagsBtn = document.getElementById('allTagsBtn');
+const replaceTagsBtn = document.getElementById('replaceTagsBtn');
+
 const tagStorageKey = 'tags';
 const readonlyStorageKey = 'readonly';
 
 const tags = {
   value: [],
   addTag(tagName) {
-    this.value.push({ name: tagName, id: `${this.value.length}_${tagName}` });
+    const enteredTag = tagName.split(' ');
+    enteredTag.forEach((tagName) => {
+      if (tagName !== '') {
+        this.value.push({ name: tagName, id: `${this.value.length}_${tagName}` });
+      }
+    });
     localStorage.setItem(tagStorageKey, JSON.stringify(this.value));
     renderList();
   },
   readonlyMode() {
     input.toggleAttribute('disabled');
     btn.toggleAttribute('disabled');
+    replaceTagsBtn.toggleAttribute('disabled');
     const destroyButtons = document.getElementsByClassName('destroy');
     for (let i = 0; i < destroyButtons.length; i++) {
       destroyButtons[i].toggleAttribute('disabled');
@@ -22,13 +31,29 @@ const tags = {
   },
   getTags() {
     const allTags = [];
-    this.value.map((tag) => {
+    tags.value.map((tag) => {
       allTags.push(tag.name);
     });
     const pTag = document.createElement('p');
     pTag.innerHTML = ``;
     pTag.innerHTML = `<p>${allTags.join(', ')}</p>`;
     list.after(pTag);
+  },
+  replaceTags(stringNewTags) {
+    const arrNewTags = stringNewTags.split(' ');
+    const newTags = [];
+    arrNewTags.forEach((tagName) => {
+      if (tagName !== '') {
+        newTags.push({ name: tagName, id: `${this.value.length}_${tagName}` });
+      }
+    });
+
+    input.value = '';
+    this.value = newTags;
+
+    localStorage.setItem(tagStorageKey, JSON.stringify(newTags));
+
+    renderList();
   },
 };
 
@@ -85,6 +110,12 @@ readonlyBox.addEventListener('click', tags.readonlyMode);
 
 window.addEventListener('click', function (e) {
   console.log(e.target);
+});
+
+allTagsBtn.addEventListener('click', tags.getTags);
+replaceTagsBtn.addEventListener('click', function () {
+  const tagValue = input.value;
+  tags.replaceTags(tagValue);
 });
 
 renderList();
