@@ -4,6 +4,7 @@ const btn = document.getElementById('btn');
 const readonlyBox = document.getElementById('readonly');
 const allTagsBtn = document.getElementById('allTagsBtn');
 const replaceTagsBtn = document.getElementById('replaceTagsBtn');
+const removeTagBtn = document.getElementById('removeTagBtn');
 
 const tagStorageKey = 'tags';
 const readonlyStorageKey = 'readonly';
@@ -52,6 +53,12 @@ const tags = {
     this.value = newTags;
 
     localStorage.setItem(tagStorageKey, JSON.stringify(newTags));
+
+    renderList();
+  },
+  removeLastTag() {
+    tags.value.pop();
+    localStorage.setItem(tagStorageKey, JSON.stringify(tags.value));
 
     renderList();
   },
@@ -108,9 +115,7 @@ list.addEventListener('click', function (e) {
 
 readonlyBox.addEventListener('click', tags.readonlyMode);
 
-window.addEventListener('click', function (e) {
-  console.log(e.target);
-});
+removeTagBtn.addEventListener('click', tags.removeLastTag);
 
 allTagsBtn.addEventListener('click', tags.getTags);
 replaceTagsBtn.addEventListener('click', function () {
